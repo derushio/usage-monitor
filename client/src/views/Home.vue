@@ -1,10 +1,12 @@
 <template lang='pug'>
 #Home
     .main-pane
+        cpu-monitor
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
+import '@/components/monitor/CpuMonitor.vue';
 
 @Component
 export default class Home extends Vue {}
