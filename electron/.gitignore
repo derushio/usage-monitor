@@ -1,0 +1,12 @@
+node_modules
+public
+dist
+dist-electron
+document
+
+yarn-error.log
+yarn.lock
+
+.env.local
+
+.vscode
