@@ -2,6 +2,7 @@ import '@/plugins/registerServiceWorker';
 
 import Vue from 'vue';
 import '@/plugins/quasar';
+import '@/plugins/chartKick';
 import { quasarApiCustomize } from '@/plugins/quasarApiCustomize';
 import { loggerApiCustomize } from '@/plugins/logger';
 
