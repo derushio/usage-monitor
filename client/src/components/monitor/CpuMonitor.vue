@@ -1,9 +1,12 @@
 <template lang='pug'>
 .cpu-monitor
+    h3.text-h5 CPUモニタ
+    h2.text-h6 CPU数: {{ cpuHistories.length }}
     .row
-        .col-2(v-for='cpuHistory in cpuHistories')
+        .col-2(v-for='cpuHistory, i in cpuHistories')
             .q-ma-md
-                line-chart(:data='parseHistory(cpuHistory)' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
+                h4.text-h6 CPU: {{ i }}
+                line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
                     :library='{ scales: { xAxes: [ { display: false } ] } }')
 </template>
 
