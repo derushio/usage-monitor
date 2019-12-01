@@ -17,6 +17,7 @@
     q-tabs(v-model='mode')
         q-tab(name='multi' label='別表示')
         q-tab(name='single' label='統合表示')
+
     q-tab-panels(v-model='mode')
         q-tab-panel(name='multi')
             .row
