@@ -1,22 +1,32 @@
 <template lang='pug'>
 .cpu-monitor
-    h3.text-h5 CPUモニタ
+    h3.text-h5.q-my-xs CPUモニタ
     h2.text-h6 CPU数: {{ cpuHistories.length }}
     .row
         .col-2(v-for='cpuHistory, i in cpuHistories')
-            .q-ma-md
-                h4.text-h6 CPU: {{ i }}
-                line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
-                    :library='{ scales: { xAxes: [ { display: false } ] } }')
+            .q-ma-xs
+                q-card
+                    q-card-section
+                        h4.text-h6.q-my-xs CPU: {{ i }}
+                        line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
+                            :library='{ scales: { xAxes: [ { display: false } ] } }')
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
+import {
+    QCard, QCardSection,
+} from 'quasar';
+
 import cpuStats from 'async-cpu-stats';
 
 import ArrayUtil from '@/utils/ArrayUtil';
 
-@Component
+@Component({
+    components: {
+        QCard, QCardSection,
+    },
+})
 export default class CpuMonitor extends Vue {
     protected cpuHistories = [] as number[][];
     protected timer?: number;
