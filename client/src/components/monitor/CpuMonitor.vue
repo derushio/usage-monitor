@@ -1,16 +1,26 @@
 <template lang='pug'>
 .cpu-monitor
     h3.text-h5.q-my-xs CPUモニタ
-    q-select.select(v-model='hisotryRecordDelay' @input='startTimer' :options='[ 100, 500, 1000, 5000 ]' label='更新毎秒')
+    q-select.select(v-model='hisotryRecordDelay' @input='startTimer' :options='[ 50, 100, 500, 1000, 5000 ]' label='更新毎秒')
 
-    h2.text-h6 CPU数: {{ cpuHistories.length }}
+    h4.text-h6 CPU数: {{ cpuHistories.length }}
+
+    h4.text-h6 総合モニタ
+    .row
+        .col
+            .q-ma-xs
+                q-card: q-card-section
+                    line-chart(:data='parseTotalHistory(cpuHistories)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
+                            :library='{ scales: { xAxes: [ { display: false } ] } }')
+
+    h4.text-h6 個別モニタ
     .row
         .col-2(v-for='cpuHistory, i in cpuHistories')
             .q-ma-xs
                 q-card: q-card-section
-                    h4.text-h6.q-my-xs CPU: {{ i }}
+                    h5.text-h6.q-my-xs CPU: {{ i }}
                     line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
-                        :library='{ scales: { xAxes: [ { display: false } ] } }')
+                            :library='{ scales: { xAxes: [ { display: false } ] } }')
 </template>
 
 <script lang='ts'>
@@ -86,6 +96,27 @@ export default class CpuMonitor extends Vue {
             return prev;
         }, his);
 
+        return his;
+    }
+
+    protected parseTotalHistory(histories: number[][]) {
+        if (histories[0] == null) { return {}; }
+
+        const gap = this.historyLength - histories[0].length;
+        let his = histories[0].reduce((prev, history, i) => {
+            let totalCpu = 0;
+            for (const index of ArrayUtil.range(histories.length)) {
+                totalCpu += histories[index][i];
+            }
+
+            prev[i + gap] = (totalCpu / (this.cpuHistories.length * 100)) * 100;
+            return prev;
+        }, {} as { [label: number]: number | null });
+
+        his = ArrayUtil.range(gap).reduce((prev, v, i) => {
+            prev[i] = null;
+            return prev;
+        }, his);
         return his;
     }
 }
