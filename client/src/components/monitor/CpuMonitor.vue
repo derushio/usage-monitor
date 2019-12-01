@@ -1,6 +1,8 @@
 <template lang='pug'>
 .cpu-monitor
     h3.text-h5.q-my-xs CPUモニタ
+    q-select.select(v-model='hisotryRecordDelay' @input='startTimer' :options='[ 100, 500, 1000, 5000 ]' label='更新毎秒')
+
     h2.text-h6 CPU数: {{ cpuHistories.length }}
     .row
         .col-2(v-for='cpuHistory, i in cpuHistories')
@@ -15,6 +17,7 @@
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
 import {
+    QSelect,
     QCard, QCardSection,
 } from 'quasar';
 
@@ -24,6 +27,7 @@ import ArrayUtil from '@/utils/ArrayUtil';
 
 @Component({
     components: {
+        QSelect,
         QCard, QCardSection,
     },
 })
@@ -39,6 +43,8 @@ export default class CpuMonitor extends Vue {
     }
 
     protected startTimer() {
+        this.stopTimer();
+
         this.timer = window.setInterval(() => {
             this.recordCpuStats();
         }, this.hisotryRecordDelay);
@@ -90,5 +96,7 @@ Vue.component('CpuMonitor', CpuMonitor);
 <style lang='stylus' scoped>
 @require '~@/assets/styles/entry/variable.styl';
 
-.cpu-monitor {}
+.cpu-monitor
+    .select
+        width: 200px;
 </style>
