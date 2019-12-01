@@ -7,11 +7,10 @@
     .row
         .col-2(v-for='cpuHistory, i in cpuHistories')
             .q-ma-xs
-                q-card
-                    q-card-section
-                        h4.text-h6.q-my-xs CPU: {{ i }}
-                        line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
-                            :library='{ scales: { xAxes: [ { display: false } ] } }')
+                q-card: q-card-section
+                    h4.text-h6.q-my-xs CPU: {{ i }}
+                    line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
+                        :library='{ scales: { xAxes: [ { display: false } ] } }')
 </template>
 
 <script lang='ts'>
