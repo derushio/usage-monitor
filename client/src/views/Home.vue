@@ -1,14 +1,23 @@
 <template lang='pug'>
 #Home
     .main-pane
-        cpu-monitor
+        cpu-monitor.q-mb-md
+        q-separator.q-mb-md(inset)
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
+import {
+    QSeparator,
+} from 'quasar';
+
 import '@/components/monitor/CpuMonitor.vue';
 
-@Component
+@Component({
+    components: {
+        QSeparator,
+    },
+})
 export default class Home extends Vue {}
 </script>
 
