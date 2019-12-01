@@ -44,7 +44,7 @@ export default class CpuMonitor extends Vue {
     protected cpuHistories = [] as number[][];
     protected timer?: number;
 
-    protected hisotryRecordDelay = 100;
+    protected hisotryRecordDelay = 500;
     protected historyLength = 100;
 
     protected mounted() {
