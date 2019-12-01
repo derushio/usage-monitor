@@ -14,19 +14,30 @@
                             :library='{ scales: { xAxes: [ { display: false } ] } }')
 
     h4.text-h6 個別モニタ
-    .row
-        .col-2(v-for='cpuHistory, i in cpuHistories')
-            .q-ma-xs
-                q-card: q-card-section
-                    h5.text-h6.q-my-xs CPU: {{ i }}
-                    line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
-                            :library='{ scales: { xAxes: [ { display: false } ] } }')
+    q-tabs(v-model='mode')
+        q-tab(name='multi' label='別表示')
+        q-tab(name='single' label='統合表示')
+    q-tab-panels(v-model='mode')
+        q-tab-panel(name='multi')
+            .row
+                .col-2(v-for='cpuHistory, i in cpuHistories')
+                    .q-ma-xs
+                        q-card: q-card-section
+                            h5.text-h6.q-my-xs CPU: {{ i }}
+                            line-chart(:data='parseHistory(cpuHistory)' height='150px' :min='0' :max='100' :dataset='{ pointRadius: 0 }'
+                                    :library='{ scales: { xAxes: [ { display: false } ] } }')
+
+        q-tab-panel(name='single')
+            .row
+                .col-2(v-for='cpuHistory, i in cpuHistories')
+                    .q-ma-xs
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
 import {
     QSelect,
+    QTabs, QTab, QTabPanels, QTabPanel,
     QCard, QCardSection,
 } from 'quasar';
 
@@ -37,6 +48,7 @@ import ArrayUtil from '@/utils/ArrayUtil';
 @Component({
     components: {
         QSelect,
+        QTabs, QTab, QTabPanels, QTabPanel,
         QCard, QCardSection,
     },
 })
@@ -46,6 +58,8 @@ export default class CpuMonitor extends Vue {
 
     protected hisotryRecordDelay = 500;
     protected historyLength = 100;
+
+    protected mode = 'multi';
 
     protected mounted() {
         this.startTimer();
