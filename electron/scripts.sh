@@ -1,5 +1,5 @@
 #!/bin/bash -eu
-APP_NAME='Electron'
+APP_NAME='System Monitor'
 
 function clean() {
     yarn rimraf './dist/*'
