@@ -14,11 +14,11 @@
                             :library='{ scales: { xAxes: [ { display: false } ] } }')
 
     h4.text-h6 個別モニタ
-    q-tabs(v-model='mode')
+    q-tabs(v-model='mode' align='justify')
         q-tab(name='multi' label='別表示')
         q-tab(name='single' label='統合表示')
 
-    q-tab-panels(v-model='mode')
+    q-tab-panels(v-model='mode' :animated='true')
         q-tab-panel(name='multi')
             .row
                 .col-2(v-for='cpuHistory, i in cpuHistories')
